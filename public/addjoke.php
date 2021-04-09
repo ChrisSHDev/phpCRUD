@@ -3,8 +3,8 @@
 if( isset( $_POST['joketext'])) {
 
     try {
-        $pdo = new PDO('mysql:host=localhost;dbname=ijdb;charset=utf8', 'ijdbuser', 'mypassword');
-        $pdo -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+        include __DIR__ . '/../includes/DatabaseConnection.php';
 
         $sql = 'INSERT INTO `joke` SET
         `joketext` = :joketext,

@@ -2,12 +2,11 @@
 
 try {
 
-    $pdo = new PDO( 'mysql:host=localhost;dbname=ijdb;charset=utf8',
-    'ijdbuser', 'mypassword');
+    include __DIR__ . '/../includes/DatabaseConnection.php';
 
-    $pdo -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $sql = 'SELECT `joke`.`id`, `joketext`, `name`, `email` 
+    FROM `joke` INNER JOIN `author` ON `authorid` = `author`.`id`';
 
-    $sql = 'SELECT `id`, `joketext` FROM `joke`';
     $jokes = $pdo -> query($sql);
 
     $title = 'Joke Board';
