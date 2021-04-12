@@ -1,3 +1,5 @@
+    <p>There are <?php echo $totalJokes ?> Jokes in total.</p>
+    
     <?php foreach ( $jokes as $joke ): ?>
     <blockquote>
         <p>
