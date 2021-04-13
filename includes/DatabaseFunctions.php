@@ -38,13 +38,69 @@ function getJoke( $pdo, $id ) {
 
 }
 
-function insertJoke( $pdo, $joketext, $authrId ) {
+function insertJoke( $pdo, $fields ) {
 
-    $query = 'INSERT INTO `joke` (`joketext`, `jokedate`, `authorId`)
-                VALUES (:joketext, CURDATE(), :authorId)';
-    
-    $parameters = [':joketext' => $joketext, ':authorId' => $authorId];
+    $query = 'INSERT INTO  `joke` (';
 
-    query( $pdo, $query, $parameters);
+    foreach ( $fields as $key => $value) {
+        $query .= '`' . $key . '`,';
+    }
+
+    $query = rtrim( $query, ',' );
+
+    $query .= ') VALUES (';
+
+    foreach ( $fields as $key => $value ) {
+        $query .= ':' . $key . ',';
+    }
+
+    $query = rtrim( $query, ',' );
+
+    $query .= ')';
+
+    $fields = processDates($fields);
+
+    query( $pdo, $query, $fields );
+}
+
+function updateJoke( $pdo, $fields ) {
+    $query = ' UPDATE `joke` SET ';
+
+    foreach ($fields as $key => $vaule) {
+        $query .= '`' . $key . '` =:' . $key . ',';
+    }
+
+    $query = rtrim( $query, ',' );
+
+    $query .= ' WHERE `id` = :primaryKey';
     
+    $fields = processDates($fields);
+
+    $fields['primaryKey'] = $fields['id'];
+
+    query( $pdo, $query, $fields );
+
+}
+
+function deleteJoke( $pdo, $id ) {
+    $parameters = [':id' => $id];
+
+    query( $pdo, 'DELETE FROM `joke` WHERE `id` = :id', $parameters);
+}
+
+function allJokes( $pdo ){
+    $jokes = query( $pdo, 'SELECT `joke`.`id`, `joketext`,`jokedate`, `name`, `email`
+                            FROM `joke` INNER JOIN `author` ON `authorid` = `author`.`id`');
+
+    return $jokes -> fetchAll();
+}
+
+function processDates( $fields ) {
+    foreach( $fields as $key => $value ) {
+        if( $value instanceof DateTime ) {
+            $fields[$key] = $value -> format('Y-m-d H:i:s');
+        }
+    }
+
+    return $fields;
 }
