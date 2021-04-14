@@ -17,9 +17,10 @@ function query( $pdo, $sql, $parameters = [] ) {
 
 }
 
-function totalJokes( $database ) {
 
-    $query = query( $database, 'SELECT COUNT(*) FROM `joke`');
+function total( $pdo, $table ) {
+
+    $query = query( $pdo, 'SELECT COUNT(*) FROM `' .$table .'`');
 
     $row = $query -> fetch();
 
@@ -27,20 +28,34 @@ function totalJokes( $database ) {
 
 }
 
-function getJoke( $pdo, $id ) {
+function findById( $pdo, $table, $primaryKey, $value ) {
 
-    $parameters = [ ':id' => $id ];
+    $query = 'SELECT * FROM `' .$table . '`
+    WHERE `' . $primaryKey . '` = :value';
 
-    $query = query( $pdo, 'SELECT * FROM `joke`
-    WHERE `id` = :id', $parameters);
+    $parameters = [ 'value' => $value ];
+
+    $query = query( $pdo, $query, $parameters);
 
     return $query->fetch();
 
 }
 
-function insertJoke( $pdo, $fields ) {
+function save( $pdo, $table, $primaryKey, $record){
+    try {
+        if ( $record[$primaryKey] == ''){
+            $record[$primaryKey] = null;
+        }
+        insert( $pdo, $table, $record );
+    }
+    catch ( PDOException $e ) {
+        update( $pdo, $table, $primaryKey, $record );
+    }
+}
 
-    $query = 'INSERT INTO  `joke` (';
+function insert( $pdo, $table, $fields ) {
+
+    $query = 'INSERT INTO  `' .$table. '` (';
 
     foreach ( $fields as $key => $value) {
         $query .= '`' . $key . '`,';
@@ -63,17 +78,17 @@ function insertJoke( $pdo, $fields ) {
     query( $pdo, $query, $fields );
 }
 
-function updateJoke( $pdo, $fields ) {
-    $query = ' UPDATE `joke` SET ';
+function update( $pdo, $table, $primaryKey, $fields ) {
+    $query = ' UPDATE `' . $table . '` SET ';
 
-    foreach ($fields as $key => $vaule) {
+    foreach ($fields as $key => $value) {
         $query .= '`' . $key . '` =:' . $key . ',';
     }
 
     $query = rtrim( $query, ',' );
 
-    $query .= ' WHERE `id` = :primaryKey';
-    
+    $query .= ' WHERE `' .$primaryKey . '` = :primaryKey';
+
     $fields = processDates($fields);
 
     $fields['primaryKey'] = $fields['id'];
@@ -82,17 +97,17 @@ function updateJoke( $pdo, $fields ) {
 
 }
 
-function deleteJoke( $pdo, $id ) {
-    $parameters = [':id' => $id];
+function delete( $pdo, $table, $primaryKey, $id ) {
+    $parameters = [':id' => $id ];
 
-    query( $pdo, 'DELETE FROM `joke` WHERE `id` = :id', $parameters);
+    query( $pdo, 'DELETE FROM `' . $table . '` 
+    WHERE `' . $primaryKey . '` = :id', $parameters );
 }
 
-function allJokes( $pdo ){
-    $jokes = query( $pdo, 'SELECT `joke`.`id`, `joketext`,`jokedate`, `name`, `email`
-                            FROM `joke` INNER JOIN `author` ON `authorid` = `author`.`id`');
+function findAll( $pdo, $table ) {
+    $result = query( $pdo, 'SELECT * FROM `' . $table . '`');
 
-    return $jokes -> fetchAll();
+    return $result -> fetchAll();
 }
 
 function processDates( $fields ) {
