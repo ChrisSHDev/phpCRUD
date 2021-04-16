@@ -4,7 +4,9 @@
         include __DIR__ . '/../includes/DatabaseConnection.php';
         include __DIR__ . '/../includes/DatabaseFunctions.php';
 
-        delete($pdo,'joke' ,'id' ,$_POST['id']);
+        $jokesTable = new DatabaseTable( $pdo, 'joke', 'id' );
+
+        $jokesTable -> delete( $_POST['id']);
 
         header('location: jokes.php');
 

@@ -8,7 +8,7 @@ if( isset( $_POST['joketext'])) {
         include __DIR__ . '/../includes/DatabaseFunctions.php';
 
         insert( $pdo, 'joke', 
-                ['authorId' => 1, 
+                ['authorid' => 1, 
                  'jokeText' => $_POST['joketext'],
                  'jokedate' => new DateTime()
         ]);
