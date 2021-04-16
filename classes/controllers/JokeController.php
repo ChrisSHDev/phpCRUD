@@ -51,7 +51,7 @@ class JokeController{
     public function delete() {
         $this -> jokesTable -> delete( $_POST{'id'});
 
-        header('location: jokes.php');
+        header('location: /joke/list');
     }
 
     public function edit() {
@@ -59,22 +59,25 @@ class JokeController{
             $joke = $_POST['joke'];
             $joke['jokedate'] = new DateTime();
             $joke['authorid'] = 1;
-            var_dump($joke);
+
             $this -> jokesTable -> save($joke);
 
-            header( 'location: index.php?action=list');
+            header( 'location: /joke/list');
+
         }
         else {
             
             if(isset( $_GET['id'])){
-                $joke = $this -> jokesTable -> findById( $_GET['id']);
+ 
+                $joke = $this -> jokesTable -> findById( $_GET['id'] );
+
             }
 
             $title = 'Edit Joke Article';
 
             return ['template' => 'editjoke.html.php', 
                     'title' => $title,
-                    'variable' => [
+                    'variables' => [
                         'joke' => $joke ?? null
                     ]
                     

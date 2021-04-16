@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="jokes.css">
+    <link rel="stylesheet" href="/jokes.css">
     <title><?= $title ?></title>
 </head>
 <body>
@@ -13,9 +13,9 @@
     </header>
     <nav>
         <ul>
-            <li><a href="index.php">Home</a></li>
-            <li><a href="index.php?action=list">Jokes</a></li>
-            <li><a href="index.php?action=edit">ADD Jokes</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/joke/list">Jokes</a></li>
+            <li><a href="/joke/edit">ADD Jokes</a></li>
         </ul>
     </nav>
 

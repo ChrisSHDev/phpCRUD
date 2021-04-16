@@ -43,6 +43,7 @@ class DatabaseTable
         return $query -> fetch();
     }
 
+
     private function insert( $fields )
     {
         $query = 'INSERT INTO `' . $this -> table . '` (';
@@ -70,7 +71,7 @@ class DatabaseTable
 
     private function update( $fields )
     {
-        $query = 'UPDATE `' . $this -> $table . '` SET ';
+        $query = 'UPDATE `' . $this -> table . '` SET ';
 
         foreach( $fields as $key => $value) {
             $query .= '`' . $key . '` = :'. $key . ',';
