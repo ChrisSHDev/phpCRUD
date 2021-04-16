@@ -1,5 +1,8 @@
 <?php 
 
+namespace FrameWork;
+use \PDO;
+
 class DatabaseTable
 {
     private $pdo;
