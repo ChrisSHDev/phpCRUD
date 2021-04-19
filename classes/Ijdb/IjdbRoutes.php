@@ -4,30 +4,48 @@ namespace Ijdb;
 
 class IjdbRoutes
 {
-    public function callAction( $route )
+    public function getRoutes()
     {
         include __DIR__ . '/../../includes/DatabaseConnection.php';
 
         $jokesTable = new \FrameWork\DatabaseTable( $pdo, 'joke', 'id' );
         $authorsTable = new \FrameWork\DatabaseTable( $pdo, 'author', 'id' );
 
-        if( $route === 'joke/list' ){
-            $controller = new \Ijdb\Controllers\Joke( $jokesTable, $authorsTable );
-            $page = $controller -> list();
-        }elseif( $route === '' ) {
-            $controller = new \Ijdb\Controllers\Joke( $jokesTable, $authorsTable );
-            $page = $controller -> home();
-        }elseif( $route === 'joke/edit' ) {
-            $controller = new \Ijdb\Controllers\Joke( $jokesTable, $authorsTable );
-            $page = $controller -> edit();
-        }elseif( $route === 'joke/delete' ) {
-            $controller = new \Ijdb\Controllers\Joke( $jokesTable, $authorsTable );
-            $page = $controller -> delete();
-        }elseif( $route === 'joke/register' ) {
-            $controller = new \Ijdb\Controllers\Joke( $jokesTable, $authorsTable );
-            $page = $controller -> showForm();
-        }
+        $jokeController = new \Ijdb\Controllers\Joke($jokesTable, $authorsTable);
 
-        return $page;
+        $routes = [
+            'joke/edit' => [
+                'POST' => [
+                    'controller' => $jokeController,
+                    'action' => 'saveEdit'
+                ],
+                'GET' => [
+                    'controller' => $jokeController,
+                    'action' => 'edit'
+                ]
+                ],
+                'joke/delete' => [
+                    'POST' => [
+                        'controller' => $jokeController,
+                        'action' => 'delete'
+                    ]
+                ],
+                'joke/list' => [
+                    'GET' =>[
+                        'controller' => $jokeController,
+                        'action' => 'list'
+                    ]
+                    ],
+                ''=>[
+                    'GET' => [
+                        'controller' => $jokeController,
+                        'action' => 'home'
+                    ]
+                ]
+
+            ];
+
+
+        return $routes;
     }
 }

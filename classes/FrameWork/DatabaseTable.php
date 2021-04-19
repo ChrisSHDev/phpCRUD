@@ -125,7 +125,7 @@ class DatabaseTable
             } 
 
             $this -> insert( $record );
-        }catch ( PDOException $e) {
+        }catch ( \PDOException $e) {
             $this -> update( $record );
         }
     }

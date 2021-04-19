@@ -5,7 +5,7 @@
 
         $route = ltrim( strtok( $_SERVER[ 'REQUEST_URI' ], '?'), '/' );
 
-        $entryPoint = new \FrameWork\EntryPoint($route, new \Ijdb\IjdbRoutes());
+        $entryPoint = new \FrameWork\EntryPoint($route, $_SERVER['REQUEST_METHOD'], new \Ijdb\IjdbRoutes());
         
         $entryPoint -> run();
 

@@ -4,7 +4,6 @@
         $fileName = str_replace('\\', '/', $className ) . '.php';
 
         $file = __DIR__ . '/../classes/' . $fileName ;
-        var_dump($file);
         include $file;
     }
     spl_autoload_register( 'autoloader' );
