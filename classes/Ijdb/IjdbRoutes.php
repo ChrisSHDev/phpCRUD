@@ -2,18 +2,60 @@
 
 namespace Ijdb;
 
-class IjdbRoutes
+class IjdbRoutes implements \FrameWork\Routes
 {
-    public function getRoutes()
-    {
+    private $authorsTable;
+    private $jokesTable;
+    private $authentication;
+
+    public function __construct(){
         include __DIR__ . '/../../includes/DatabaseConnection.php';
 
-        $jokesTable = new \FrameWork\DatabaseTable( $pdo, 'joke', 'id' );
-        $authorsTable = new \FrameWork\DatabaseTable( $pdo, 'author', 'id' );
+        $this -> jokesTable = new \FrameWork\DatabaseTable( $pdo, 'joke', 'id' );
+        $this -> authorsTable = new \FrameWork\DatabaseTable( $pdo, 'author', 'id' );
+        $this -> authentication = new \FrameWork\Authentication( $this -> authorsTable, 'email', 'password');
+    }
 
-        $jokeController = new \Ijdb\Controllers\Joke($jokesTable, $authorsTable);
+    public function getRoutes(): array
+    {
 
+        $authorController = new \Ijdb\Controllers\Register( $this -> authorsTable );
+        $jokeController = new \Ijdb\Controllers\Joke($this -> jokesTable, $this -> authorsTable);
+        $loginController = new \Ijdb\Controllers\Login($this->authentication);
+        
         $routes = [
+            'author/register' => [
+                'GET' => [
+                    'controller' => $authorController,
+                    'action' => 'registrationForm'
+                ],
+                'POST' => [
+                    'controller' => $authorController,
+                    'action' => 'registerUser'
+                ]
+                ],
+            'login/error' => [
+                'GET' => [
+                    'controller' => $loginController,
+                    'action' => 'error'
+                ]
+                ],
+            'login' => [
+                'GET' => [
+                    'controller' => $loginController,
+                    'action' => 'loginForm'
+                ],
+                'POST' => [
+                    'controller' => $loginController,
+                    'action' => 'processLogin'
+                ]
+                ],
+            'author/success' => [
+                'GET' => [
+                    'controller' => $authorController,
+                    'action' => 'success'
+                ]
+            ],
             'joke/edit' => [
                 'POST' => [
                     'controller' => $jokeController,
@@ -22,13 +64,15 @@ class IjdbRoutes
                 'GET' => [
                     'controller' => $jokeController,
                     'action' => 'edit'
-                ]
+                ],
+                'login' => true
                 ],
                 'joke/delete' => [
                     'POST' => [
                         'controller' => $jokeController,
                         'action' => 'delete'
-                    ]
+                    ],
+                    'login' => true
                 ],
                 'joke/list' => [
                     'GET' =>[
@@ -47,5 +91,10 @@ class IjdbRoutes
 
 
         return $routes;
+    }
+
+    public function getAuthentication(): \FrameWork\Authentication
+    {
+        return $this -> authentication;
     }
 }
