@@ -22,8 +22,9 @@ class login
 
     public function processLogin()
     {
+
         if( $this-> authentication -> login($_POST['email'], $_POST['password'])){
-            header('locatiion: /login/success');
+            header('location: /login/success');
         }
         else{
             return['template' => 'login.html.php',
@@ -34,7 +35,13 @@ class login
             ];
         }
     }
+
     public function success(){
         return['template' => 'loginsuccess.html.php', 'title' => 'Log In Success!'];
+    }
+
+    public function logout(){
+        unset($_SESSION);
+        return ['template' => 'logout.html.php', 'title' => 'You are logged out now.'];
     }
 }

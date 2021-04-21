@@ -6,10 +6,10 @@ endif;
 
 <form action="" method="post">
     <label for="email">Email: </label>
-    <input type="text" name="author[email]" id="email">
+    <input type="text" name="email" id="email">
 
     <label for="password">Password: </label>
-    <input type="password" name="author[password]" id="password">
+    <input type="password" name="password" id="password">
 
     <input type="submit" name="submit" value="Log In">
 </form>

@@ -15,10 +15,10 @@ if( !empty($errors) ):
 
 <form action="" method="post">
 <label for="email">Email: </label>
-<input type="text" name="author[email]" id="email" value="<?php echo $author['email']?>">
+<input type="text" name="author[email]" id="email" value="<?php echo $author['email'] ?? '' ?>">
 
 <label for="name">Name: </label>
-<input type="text" name="author[name]" id="name" value="<?php echo $author['name'] ?>">
+<input type="text" name="author[name]" id="name" value="<?php echo $author['name'] ?? '' ?>">
 
 <label for="password">Password: </label>
 <input type="password" name="author[password]" id="password">

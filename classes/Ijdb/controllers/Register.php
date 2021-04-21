@@ -57,7 +57,7 @@ class Register
         }
 
         if( $valid == true) {
-            $author['password'] = password_hash( $authorr['password'], PASSWORD_DEFAULT);
+            $author['password'] = \password_hash( $author['password'], PASSWORD_DEFAULT);
 
             $this -> authorsTable -> save($author);
 

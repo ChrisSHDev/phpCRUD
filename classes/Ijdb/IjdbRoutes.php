@@ -40,6 +40,12 @@ class IjdbRoutes implements \FrameWork\Routes
                     'action' => 'error'
                 ]
                 ],
+            'login/success' => [
+                'GET' => [
+                    'controller' => $loginController,
+                    'action' => 'success'
+                ]
+            ],
             'login' => [
                 'GET' => [
                     'controller' => $loginController,
@@ -48,6 +54,12 @@ class IjdbRoutes implements \FrameWork\Routes
                 'POST' => [
                     'controller' => $loginController,
                     'action' => 'processLogin'
+                ]
+                ],
+            'logout'=> [
+                'GET' => [
+                    'controller' => $loginController,
+                    'action' => 'logout'
                 ]
                 ],
             'author/success' => [
