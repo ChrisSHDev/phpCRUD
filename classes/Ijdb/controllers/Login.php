@@ -42,6 +42,7 @@ class login
 
     public function logout(){
         unset($_SESSION);
+
         return ['template' => 'logout.html.php', 'title' => 'You are logged out now.'];
     }
 }

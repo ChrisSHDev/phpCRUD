@@ -20,7 +20,7 @@ class IjdbRoutes implements \FrameWork\Routes
     {
 
         $authorController = new \Ijdb\Controllers\Register( $this -> authorsTable );
-        $jokeController = new \Ijdb\Controllers\Joke($this -> jokesTable, $this -> authorsTable);
+        $jokeController = new \Ijdb\Controllers\Joke($this -> jokesTable, $this -> authorsTable, $this -> authentication);
         $loginController = new \Ijdb\Controllers\Login($this->authentication);
         
         $routes = [

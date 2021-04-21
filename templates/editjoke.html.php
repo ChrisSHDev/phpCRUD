@@ -1,3 +1,5 @@
+<?php if( $userId == $joke['authorid']): ?>
+
 <form action="" method="post">
     <input type="hidden" name="joke[id]" value="<?php echo $joke['id'] ?? ''; ?>">
     <label for="joketext">Please enter joke article:</label>
@@ -6,3 +8,8 @@
     </textarea>
     <input type="submit" name="submit" value="Submit">
 </form>
+<?php else: ?>
+
+<p>You can edit only your own article.</p>
+
+<?php endif; ?>
