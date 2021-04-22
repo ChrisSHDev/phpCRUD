@@ -41,8 +41,7 @@ class login
     }
 
     public function logout(){
-        unset($_SESSION);
-
+        \session_destroy();
         return ['template' => 'logout.html.php', 'title' => 'You are logged out now.'];
     }
 }

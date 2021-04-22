@@ -76,14 +76,14 @@ class Joke{
 
         if(isset($_GET['id'])){
             $joke = $this -> jokesTable -> findById($_GET['id']);
-            if( $joke['authorId'] != $author['id']){
+            if( $joke['authorid'] != $author['id']){
                 return;
             }
         }
 
         $joke = $_POST['joke'];
         $jokep['jokedate'] = new \DateTime();
-        $joke['authorId'] = $author['id'];
+        $joke['authorid'] = $author['id'];
 
         $this -> jokesTable -> save($joke);
 
@@ -92,7 +92,7 @@ class Joke{
 
     public function edit() {
         $author = $this -> authentication -> getUser();
-
+        var_dump($author);
         if(isset($_GET['id'])){
             $joke = $this -> jokesTable -> findById($_GET['id']);
         }

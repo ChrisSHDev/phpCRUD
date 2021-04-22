@@ -1,4 +1,4 @@
-<?php if( $userId == $joke['authorid']): ?>
+<?php if( empty($joke['id']) || $userId == $joke['authorid']): ?>
 
 <form action="" method="post">
     <input type="hidden" name="joke[id]" value="<?php echo $joke['id'] ?? ''; ?>">
