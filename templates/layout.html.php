@@ -11,7 +11,7 @@
     <header>
         <h1>php Joke Board</h1>
     </header>
-    <nav>
+    <nav class="navbar navbar-dark bg-dark">
         <ul>
             <li><a href="/">Home</a></li>
             <li><a href="/joke/list">Jokes</a></li>
