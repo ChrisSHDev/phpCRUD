@@ -1,6 +1,6 @@
 <?php
 
-namespace Ijdb\Controllers;
+namespace Ijdb\Controlls;
 
 use \FrameWork\DatabaseTable;
 use \FrameWork\Authentication;
