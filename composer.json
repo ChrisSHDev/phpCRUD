@@ -1,0 +1,8 @@
+{
+  "autoload": {
+    "psr-4" : {
+      "FrameWork\\": "classes/FrameWork",
+      "Ijdb\\": "classes/Ijdb"
+    }
+  }
+}
