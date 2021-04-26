@@ -6,7 +6,7 @@
         $route = ltrim(strtok($_SERVER[ 'REQUEST_URI' ], '?'), '/');
 
         $entryPoint = new FrameWork\EntryPoint($route, $_SERVER['REQUEST_METHOD'], new Ijdb\IjdbRoutes());
-        
+        var_dump($entryPoint);
         $entryPoint -> run();
     } catch (PDOException $e) {
         $title = 'There is ERROR!';
