@@ -1,28 +1,30 @@
-<?php 
+<?php
 
 namespace Ijdb\Controllers;
+
 use \FrameWork\DatabaseTable;
 use \FrameWork\Authentication;
 
-
-class Joke{
+class Joke
+{
     private $authorsTable;
     private $jokesTable;
 
-    public function __construct( DatabaseTable $jokesTable, DatabaseTable $authorsTable, Authentication $authentication )
+    public function __construct(DatabaseTable $jokesTable, DatabaseTable $authorsTable, Authentication $authentication)
     {
         $this -> jokesTable = $jokesTable;
         $this -> authorsTable = $authorsTable;
         $this -> authentication = $authentication;
     }
 
-    public function list() {
+    public function list()
+    {
         $result = $this -> jokesTable -> findAll();
 
         $jokes = [];
 
-        foreach ( $result as $joke ) {
-            $author = $this -> authorsTable -> findById( $joke['authorid']);
+        foreach ($result as $joke) {
+            $author = $this -> authorsTable -> findById($joke['authorid']);
 
             $jokes[] = [
                 'id' => $joke['id'],
@@ -32,7 +34,6 @@ class Joke{
                 'email' => $author['email'],
                 'authorId' => $author['id']
             ];
-
         }
 
 
@@ -42,7 +43,7 @@ class Joke{
 
         $author = $this -> authentication -> getUser();
 
-            return ['template' => 'jokes.html.php', 
+        return ['template' => 'jokes.html.php',
                      'title' => $title,
                      'variables' => [
                         'totalJokes' => $totalJokes,
@@ -52,31 +53,34 @@ class Joke{
                     ];
     }
 
-    public function home() {
+    public function home()
+    {
         $title = 'Online Joke World';
 
         return [ 'template' => 'home.html.php', 'title' => $title ];
     }
 
-    public function delete() {
+    public function delete()
+    {
         $author = $this -> authentication -> getUser();
 
         $joke = $this -> jokesTable -> findById($_GET['id']);
-        if( $joke['authorId'] != $author['id']){
+        if ($joke['authorId'] != $author['id']) {
             return;
         }
 
-        $this -> jokesTable -> delete( $_POST{'id'});
+        $this -> jokesTable -> delete($_POST['id']);
 
         header('location: /joke/list');
     }
 
-    public function saveEdit() {
+    public function saveEdit()
+    {
         $author = $this -> authentication -> getUser();
 
-        if(isset($_GET['id'])){
+        if (isset($_GET['id'])) {
             $joke = $this -> jokesTable -> findById($_GET['id']);
-            if( $joke['authorid'] != $author['id']){
+            if ($joke['authorid'] != $author['id']) {
                 return;
             }
         }
@@ -90,16 +94,17 @@ class Joke{
         header('location: /joke/list');
     }
 
-    public function edit() {
+    public function edit()
+    {
         $author = $this -> authentication -> getUser();
         var_dump($author);
-        if(isset($_GET['id'])){
+        if (isset($_GET['id'])) {
             $joke = $this -> jokesTable -> findById($_GET['id']);
         }
 
-            $title = 'Edit Joke Article';
+        $title = 'Edit Joke Article';
 
-            return ['template' => 'editjoke.html.php', 
+        return ['template' => 'editjoke.html.php',
                     'title' => $title,
                     'variables' => [
                         'joke' => $joke ?? null,
@@ -107,6 +112,5 @@ class Joke{
                     ]
                     
                 ];
-    
     }
 }
