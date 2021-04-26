@@ -5,7 +5,7 @@
 
         //$file = __DIR__ . '/../classes/' . $fileName ;
         
-        $file = '/app/classes/' . $fileName;
+        $file = '/vendor/bin/classes/' . $fileName;
 
         include $file;
     }
