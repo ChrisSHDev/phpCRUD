@@ -1,21 +1,18 @@
-<?php 
+<?php
 
-    try{
-        include __DIR__ . '/../includes/autoload.php';
+    try {
+        include __DIR__ . '/includes/autoload.php';
 
-        $route = ltrim( strtok( $_SERVER[ 'REQUEST_URI' ], '?'), '/' );
+        $route = ltrim(strtok($_SERVER[ 'REQUEST_URI' ], '?'), '/');
 
         $entryPoint = new \FrameWork\EntryPoint($route, $_SERVER['REQUEST_METHOD'], new \Ijdb\IjdbRoutes());
         
         $entryPoint -> run();
-
-    }catch (PDOException $e) {
+    } catch (PDOException $e) {
         $title = 'There is ERROR!';
 
-        $output = 'ERROR on Database' . $e -> getMessage() . ', location: ' . 
+        $output = 'ERROR on Database' . $e -> getMessage() . ', location: ' .
         $e->getFile() . ': ' . $e -> getLine();
 
         include __DIR__ . '/../templates/layout.html.php';
     }
-
-    
