@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Ijdb;
 
@@ -8,20 +8,20 @@ class IjdbRoutes implements \FrameWork\Routes
     private $jokesTable;
     private $authentication;
 
-    public function __construct(){
+    public function __construct()
+    {
         include __DIR__ . '/../../includes/DatabaseConnection.php';
 
-        $this -> jokesTable = new \FrameWork\DatabaseTable( $pdo, 'joke', 'id' );
-        $this -> authorsTable = new \FrameWork\DatabaseTable( $pdo, 'author', 'id' );
-        $this -> authentication = new \FrameWork\Authentication( $this -> authorsTable, 'email', 'password');
+        $this -> jokesTable = new \FrameWork\DatabaseTable($pdo, 'joke', 'id');
+        $this -> authorsTable = new \FrameWork\DatabaseTable($pdo, 'author', 'id');
+        $this -> authentication = new \FrameWork\Authentication($this -> authorsTable, 'email', 'password');
     }
 
     public function getRoutes(): array
     {
-
-        $authorController = new \Ijdb\Controllers\Register( $this -> authorsTable );
         $jokeController = new \Ijdb\Controllers\Joke($this -> jokesTable, $this -> authorsTable, $this -> authentication);
         $loginController = new \Ijdb\Controllers\Login($this->authentication);
+        $authorController = new \Ijdb\Controllers\Register($this -> authorsTable);
         
         $routes = [
             'author/register' => [
