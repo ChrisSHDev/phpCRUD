@@ -19,9 +19,9 @@ class IjdbRoutes implements \FrameWork\Routes
 
     public function getRoutes(): array
     {
-        $jokeController = new \Ijdb\Controllers\Joke($this -> jokesTable, $this -> authorsTable, $this -> authentication);
-        $loginController = new \Ijdb\Controllers\Login($this->authentication);
-        $authorController = new \Ijdb\Controllers\Register($this -> authorsTable);
+        $jokeController = new \Ijdb\Controlls\Joke($this -> jokesTable, $this -> authorsTable, $this -> authentication);
+        $loginController = new \Ijdb\Controlls\Login($this->authentication);
+        $authorController = new \Ijdb\Controlls\Register($this -> authorsTable);
         
         $routes = [
             'author/register' => [
