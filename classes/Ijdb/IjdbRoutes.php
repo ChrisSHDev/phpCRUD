@@ -86,7 +86,7 @@ class IjdbRoutes implements \FrameWork\Routes
                     ],
                     'login' => true
                 ],
-                '/joke/list' => [
+                'joke/list' => [
                     'GET' =>[
                         'controller' => $jokeController,
                         'action' => 'list'
