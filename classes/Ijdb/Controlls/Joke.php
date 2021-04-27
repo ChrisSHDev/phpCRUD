@@ -57,7 +57,7 @@ class Joke
     {
         $title = 'Online Joke World';
 
-        return [ 'template' => 'jokes.html.php', 'title' => $title ];
+        return [ 'template' => 'home.html.php', 'title' => $title ];
     }
 
     public function delete()
