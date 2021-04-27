@@ -1,12 +1,9 @@
-RewriteEngine On
-RewriteBase /
-RewriteRule ^index\.php$ - [L]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /index.php [L]
-
 <IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteCond %{HTTP:X-Forwarded-Proto} !https
-RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [R,L]
+    Options -MultiViews
+
+    RewriteEngine On
+    #RewriteBase /path/to/app
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [QSA,L]
 </IfModule>
