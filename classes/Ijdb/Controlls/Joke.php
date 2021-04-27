@@ -97,7 +97,7 @@ class Joke
     public function edit()
     {
         $author = $this -> authentication -> getUser();
-        var_dump($author);
+
         if (isset($_GET['id'])) {
             $joke = $this -> jokesTable -> findById($_GET['id']);
         }
