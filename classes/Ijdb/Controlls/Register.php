@@ -1,19 +1,20 @@
-<?php 
+<?php
 namespace Ijdb\Controlls;
+
 use \FrameWork\DatabaseTable;
 
 class Register
 {
     private $authorsTable;
 
-    public function __construct( DatabaseTable $authorsTable )
+    public function __construct(DatabaseTable $authorsTable)
     {
         $this -> authorsTable = $authorsTable;
     }
 
     public function registrationForm()
     {
-        return ['template' => 'register.html.php', 
+        return ['template' => 'register.html.php',
         'title' => 'Register User'];
     }
 
@@ -22,7 +23,8 @@ class Register
         return ['template' => 'registersuccess.html.php', 'title' => 'Your account is registered!'];
     }
 
-    public function registerUser() {
+    public function registerUser()
+    {
         $author = $_POST['author'];
 
         $valid = true;
@@ -31,45 +33,44 @@ class Register
 
 
 
-        if(empty($author['name'])){
+        if (empty($author['name'])) {
             $valid = false;
             $errors[] = 'A name is a required field';
         }
 
-        if(empty($author['email'])){
+        if (empty($author['email'])) {
             $valid = false;
             $errors[] = 'An email is a required field';
-        }elseif( filter_var($author['email'], FILTER_VALIDATE_EMAIL) == false ){
+        } elseif (filter_var($author['email'], FILTER_VALIDATE_EMAIL) == false) {
             $valid = false;
             $errors[] = 'It\' unvalide email address';
-        }else{
+        } else {
             $author['email'] = strtolower($author['email']);
         }
 
-        if(count( $this-> authorsTable -> find('email', $author['email']))>0 ){
+        if (count($this-> authorsTable -> find('email', $author['email']))>0) {
             $valid = false;
             $errors[] = 'You already have an account';
         }
 
-        if(empty($author['password'])){
+        if (empty($author['password'])) {
             $valid = false;
             $errors[] = 'A password is a required field';
         }
 
-        if( $valid == true) {
-            $author['password'] = \password_hash( $author['password'], PASSWORD_DEFAULT);
+        if ($valid == true) {
+            $author['password'] = \password_hash($author['password'], PASSWORD_DEFAULT);
 
             $this -> authorsTable -> save($author);
-
-            header('Location: /author/success');
+            var_dump($author);
+            //header('Location: /author/success');
         }
 
-        if( $valid == true ){
-            $this -> authorsTAble -> save( $author );
-
-            header('Location: /author/success');
-        }
-        else{
+        if ($valid == true) {
+            $this -> authorsTAble -> save($author);
+            var_dump($author);
+        //header('Location: /author/success');
+        } else {
             return['template' => 'register.html.php', 'title' => 'Register User',
             'variables' => [
                 'errors' => $errors,

@@ -64,7 +64,7 @@ class Joke
     {
         $author = $this -> authentication -> getUser();
 
-        $joke = $this -> jokesTable -> findById($_GET['id']);
+        $joke = $this -> jokesTable -> findById($_POST['id']);
         if ($joke['authorId'] != $author['id']) {
             return;
         }

@@ -13,7 +13,7 @@ class IjdbRoutes implements \FrameWork\Routes
         include __DIR__ . '/../../includes/DatabaseConnection.php';
 
         $this -> jokesTable = new \FrameWork\DatabaseTable($pdo, 'joke', 'id');
-        $this -> authorsTable = new \FrameWork\DatabaseTable($pdo, 'author', 'id');
+        $this -> authorsTable = new \FrameWork\DatabaseTable($pdo, 'author', 'id', '\Ijdb\Entity\Author', [$this -> jokesTable]);
         $this -> authentication = new \FrameWork\Authentication($this -> authorsTable, 'email', 'password');
     }
 
