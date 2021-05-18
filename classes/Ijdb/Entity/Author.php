@@ -10,9 +10,9 @@ class Author
     public $password;
     private $jokesTable;
 
-    public function __construct(\Hanbit\DatabaseTable $jokesTable)
+    public function __construct(\FrameWork\DatabaseTable $jokesTable)
     {
-        $This -> jokesTable = $jokesTable;
+        $this -> jokesTable = $jokesTable;
     }
 
     public function getJokes()

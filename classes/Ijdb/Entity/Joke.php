@@ -1,0 +1,22 @@
+<?php
+
+namespace Ijdb\Entity;
+
+class Joke
+{
+    public $id;
+    public $authorid;
+    public $jokedate;
+    public $joketext;
+    private $authorsTable;
+
+    public function __construct(\FrameWork\DatabaseTable $authorsTable)
+    {
+        $this -> authorsTable = $authorsTable;
+    }
+
+    public function getAuthor()
+    {
+        return $this -> authorsTable -> findById($this -> authorid);
+    }
+}

@@ -24,15 +24,15 @@ class Joke
         $jokes = [];
 
         foreach ($result as $joke) {
-            $author = $this -> authorsTable -> findById($joke['authorid']);
+            $author = $this -> authorsTable -> findById($joke -> authorid);
 
             $jokes[] = [
-                'id' => $joke['id'],
-                'joketext' => $joke['joketext'],
-                'jokedate' => $joke['jokedate'],
-                'name' => $author['name'],
-                'email' => $author['email'],
-                'authorId' => $author['id']
+                'id' => $joke -> id,
+                'joketext' => $joke -> joketext,
+                'jokedate' => $joke -> jokedate,
+                'name' => $author -> name,
+                'email' => $author -> email,
+                'authorId' => $author -> id
             ];
         }
 
@@ -48,7 +48,7 @@ class Joke
                      'variables' => [
                         'totalJokes' => $totalJokes,
                         'jokes' => $jokes,
-                        'userId' => $author['id'] ?? null
+                        'userId' => $author -> id ?? null
                      ]
                     ];
     }
@@ -65,7 +65,7 @@ class Joke
         $author = $this -> authentication -> getUser();
 
         $joke = $this -> jokesTable -> findById($_POST['id']);
-        if ($joke['authorId'] != $author['id']) {
+        if ($joke -> authorid != $author-> id) {
             return;
         }
 
@@ -76,20 +76,12 @@ class Joke
 
     public function saveEdit()
     {
-        $author = $this -> authentication -> getUser();
-
-        if (isset($_GET['id'])) {
-            $joke = $this -> jokesTable -> findById($_GET['id']);
-            if ($joke['authorid'] != $author['id']) {
-                return;
-            }
-        }
+        $authorObject = $this -> authentication -> getUser();
 
         $joke = $_POST['joke'];
         $jokep['jokedate'] = new \DateTime();
-        $joke['authorid'] = $author['id'];
 
-        $this -> jokesTable -> save($joke);
+        $authorObject -> addJoke($joke);
 
         header('location: /joke/list');
     }
@@ -108,7 +100,7 @@ class Joke
                     'title' => $title,
                     'variables' => [
                         'joke' => $joke ?? null,
-                        'userId' => $author['id'] ?? null
+                        'userId' => $author -> id ?? null
                     ]
                     
                 ];
