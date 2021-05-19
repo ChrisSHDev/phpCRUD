@@ -19,23 +19,7 @@ class Joke
 
     public function list()
     {
-        $result = $this -> jokesTable -> findAll();
-
-        $jokes = [];
-
-        foreach ($result as $joke) {
-            $author = $this -> authorsTable -> findById($joke -> authorid);
-
-            $jokes[] = [
-                'id' => $joke -> id,
-                'joketext' => $joke -> joketext,
-                'jokedate' => $joke -> jokedate,
-                'name' => $author -> name,
-                'email' => $author -> email,
-                'authorId' => $author -> id
-            ];
-        }
-
+        $jokes = $this -> jokesTable -> findAll();
 
         $title = 'Joke Board';
 
@@ -79,7 +63,7 @@ class Joke
         $authorObject = $this -> authentication -> getUser();
 
         $joke = $_POST['joke'];
-        $jokep['jokedate'] = new \DateTime();
+        $joke['jokedate'] = new \DateTime();
 
         $authorObject -> addJoke($joke);
 
