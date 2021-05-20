@@ -7,6 +7,7 @@ class IjdbRoutes implements \FrameWork\Routes
     private $authorsTable;
     private $jokesTable;
     private $authentication;
+    private $categoriesTable;
 
     public function __construct()
     {
@@ -14,6 +15,7 @@ class IjdbRoutes implements \FrameWork\Routes
 
         $this -> jokesTable = new \FrameWork\DatabaseTable($pdo, 'joke', 'id', '\Ijdb\Entity\Joke', [ &$this -> authorsTable ]);
         $this -> authorsTable = new \FrameWork\DatabaseTable($pdo, 'author', 'id', '\Ijdb\Entity\Author', [ &$this -> jokesTable]);
+        $this -> categoriesTable = new \FrameWork\DatabaseTable($pdo, 'category', 'id');
         $this -> authentication = new \FrameWork\Authentication($this -> authorsTable, 'email', 'password');
     }
 
@@ -22,6 +24,7 @@ class IjdbRoutes implements \FrameWork\Routes
         $jokeController = new \Ijdb\Controlls\Joke($this -> jokesTable, $this -> authorsTable, $this -> authentication);
         $loginController = new \Ijdb\Controlls\Login($this->authentication);
         $authorController = new \Ijdb\Controlls\Register($this -> authorsTable);
+        $categoryController = new \Ijdb\Controlls\Category($this -> categoriesTable);
         
         $routes = [
             'author/register' => [
@@ -97,6 +100,24 @@ class IjdbRoutes implements \FrameWork\Routes
                         'controller' => $jokeController,
                         'action' => 'home'
                     ]
+                    ],
+                'category/edit' => [
+                  'POST' => [
+                    'controller' => $categoryController,
+                    'action' => 'saveEdit'
+                  ],
+                  'GET' => [
+                    'controller' => $categoryController,
+                    'action' => 'edit'
+                  ],
+                  'login' => true
+                ],
+                'category/list' => [
+                  'GET' => [
+                    'controller' => $categoryController,
+                    'action' => 'list'
+                  ],
+                  'login' => true
                 ]
 
             ];
