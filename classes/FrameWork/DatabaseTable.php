@@ -134,8 +134,9 @@ class DatabaseTable
 
     public function save($record)
     {
+        $entity = new $this -> className(...$this -> constructorArgs);
+
         try {
-            var_dump($record);
             if ($record[$this -> primaryKey] == '') {
                 $record[$this -> primaryKey] = null;
             }
@@ -144,5 +145,12 @@ class DatabaseTable
         } catch (\PDOException $e) {
             $this -> update($record);
         }
+
+        foreach ($record as $key => $value) {
+            if (!empty($value)) {
+                $entity -> $key = $value;
+            }
+        }
+        return $entity;
     }
 }

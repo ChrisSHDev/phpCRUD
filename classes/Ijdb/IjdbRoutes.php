@@ -8,6 +8,7 @@ class IjdbRoutes implements \FrameWork\Routes
     private $jokesTable;
     private $authentication;
     private $categoriesTable;
+    private $jokeCategoriesTable;
 
     public function __construct()
     {
@@ -17,6 +18,7 @@ class IjdbRoutes implements \FrameWork\Routes
         $this -> authorsTable = new \FrameWork\DatabaseTable($pdo, 'author', 'id', '\Ijdb\Entity\Author', [ &$this -> jokesTable]);
         $this -> categoriesTable = new \FrameWork\DatabaseTable($pdo, 'category', 'id');
         $this -> authentication = new \FrameWork\Authentication($this -> authorsTable, 'email', 'password');
+        $this -> jokeCategoriesTable = new \FrameWork\DatabaseTable($pdo, 'joke_category', 'categoryId');
     }
 
     public function getRoutes(): array
@@ -116,6 +118,13 @@ class IjdbRoutes implements \FrameWork\Routes
                   'GET' => [
                     'controller' => $categoryController,
                     'action' => 'list'
+                  ],
+                  'login' => true
+                ],
+                'category/delete' => [
+                  'POST' => [
+                    'controller' => $categoryController,
+                    'action' => 'delete'
                   ],
                   'login' => true
                 ]

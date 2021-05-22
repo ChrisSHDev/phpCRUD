@@ -63,12 +63,6 @@ class Register
 
             $this -> authorsTable -> save($author);
             var_dump($author);
-            //header('Location: /author/success');
-        }
-
-        if ($valid == true) {
-            $this -> authorsTAble -> save($author);
-            var_dump($author);
         //header('Location: /author/success');
         } else {
             return['template' => 'register.html.php', 'title' => 'Register User',

@@ -6,6 +6,11 @@
   <textarea name="joke[joketext]" id="joketext" cols="30" rows="3">
         <?php echo $joke -> joketext ?? ''; ?>
     </textarea>
+  <p>Categories:</p>
+  <?php foreach ($categories as $category): ?>
+  <input type="checkbox" name="category[]" value="<?php echo $category -> id ?>" />
+  <label><?php echo $category -> name ?></label>
+  <?php endforeach; ?>
   <input type="submit" name="submit" value="Submit">
 </form>
 <?php else: ?>

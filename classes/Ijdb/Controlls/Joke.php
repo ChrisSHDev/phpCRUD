@@ -9,11 +9,14 @@ class Joke
 {
     private $authorsTable;
     private $jokesTable;
+    private $categoriesTable;
+    private $authentication;
 
-    public function __construct(DatabaseTable $jokesTable, DatabaseTable $authorsTable, Authentication $authentication)
+    public function __construct(DatabaseTable $jokesTable, DatabaseTable $authorsTable, DatabaseTable $categoriesTable, Authentication $authentication)
     {
         $this -> jokesTable = $jokesTable;
         $this -> authorsTable = $authorsTable;
+        $this -> categoriesTable = $categoriesTable;
         $this -> authentication = $authentication;
     }
 
@@ -67,12 +70,17 @@ class Joke
 
         $authorObject -> addJoke($joke);
 
+        foreach ($_POST['category'] as $categoryId) {
+            $jokeEntity -> addCategory($categoryId);
+        }
+
         header('location: /joke/list');
     }
 
     public function edit()
     {
         $author = $this -> authentication -> getUser();
+        $categories = $this -> categoriesTable -> findAll();
 
         if (isset($_GET['id'])) {
             $joke = $this -> jokesTable -> findById($_GET['id']);
@@ -84,7 +92,8 @@ class Joke
                     'title' => $title,
                     'variables' => [
                         'joke' => $joke ?? null,
-                        'userId' => $author -> id ?? null
+                        'userId' => $author -> id ?? null,
+                        'categories' => $categories
                     ]
                     
                 ];
