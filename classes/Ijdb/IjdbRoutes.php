@@ -14,16 +14,16 @@ class IjdbRoutes implements \FrameWork\Routes
     {
         include __DIR__ . '/../../includes/DatabaseConnection.php';
 
-        $this -> jokesTable = new \FrameWork\DatabaseTable($pdo, 'joke', 'id', '\Ijdb\Entity\Joke', [ &$this -> authorsTable ]);
+        $this -> jokesTable = new \FrameWork\DatabaseTable($pdo, 'joke', 'id', '\Ijdb\Entity\Joke', [ &$this -> authorsTable, &$this -> jokeCategoriesTable]);
         $this -> authorsTable = new \FrameWork\DatabaseTable($pdo, 'author', 'id', '\Ijdb\Entity\Author', [ &$this -> jokesTable]);
         $this -> categoriesTable = new \FrameWork\DatabaseTable($pdo, 'category', 'id');
-        $this -> authentication = new \FrameWork\Authentication($this -> authorsTable, 'email', 'password');
         $this -> jokeCategoriesTable = new \FrameWork\DatabaseTable($pdo, 'joke_category', 'categoryId');
+        $this -> authentication = new \FrameWork\Authentication($this -> authorsTable, 'email', 'password');
     }
 
     public function getRoutes(): array
     {
-        $jokeController = new \Ijdb\Controlls\Joke($this -> jokesTable, $this -> authorsTable, $this -> authentication);
+        $jokeController = new \Ijdb\Controlls\Joke($this -> jokesTable, $this -> authorsTable, $this -> categoriesTable, $this -> authentication);
         $loginController = new \Ijdb\Controlls\Login($this->authentication);
         $authorController = new \Ijdb\Controlls\Register($this -> authorsTable);
         $categoryController = new \Ijdb\Controlls\Category($this -> categoriesTable);

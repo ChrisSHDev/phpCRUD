@@ -87,6 +87,8 @@ class DatabaseTable
         $fields = $this -> processDates($fields);
     
         $this -> query($query, $fields);
+
+        return $this -> pdo -> lastInsertId();
     }
 
     private function update($fields)
@@ -141,7 +143,9 @@ class DatabaseTable
                 $record[$this -> primaryKey] = null;
             }
 
-            $this -> insert($record);
+            $insertId = $this -> insert($record);
+
+            $entity->{ $this -> primaryKey }=$insertId;
         } catch (\PDOException $e) {
             $this -> update($record);
         }

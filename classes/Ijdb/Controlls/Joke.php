@@ -63,12 +63,13 @@ class Joke
 
     public function saveEdit()
     {
-        $authorObject = $this -> authentication -> getUser();
+        $author = $this -> authentication -> getUser();
 
         $joke = $_POST['joke'];
         $joke['jokedate'] = new \DateTime();
 
-        $authorObject -> addJoke($joke);
+        $jokeEntity = $author->addJoke($joke);
+
 
         foreach ($_POST['category'] as $categoryId) {
             $jokeEntity -> addCategory($categoryId);
@@ -76,6 +77,7 @@ class Joke
 
         header('location: /joke/list');
     }
+
 
     public function edit()
     {
