@@ -8,7 +8,11 @@
     </textarea>
   <p>Categories:</p>
   <?php foreach ($categories as $category): ?>
+  <?php if ($joke && $joke->hasCategory($category->id)): ?>
+  <input type="checkbox" checked name="category[]" value="<?php echo $category -> id ?>" />
+  <?php else: ?>
   <input type="checkbox" name="category[]" value="<?php echo $category -> id ?>" />
+  <?php endif; ?>
   <label><?php echo $category -> name ?></label>
   <?php endforeach; ?>
   <input type="submit" name="submit" value="Submit">

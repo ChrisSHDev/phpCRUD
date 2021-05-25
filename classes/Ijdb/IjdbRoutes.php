@@ -16,7 +16,7 @@ class IjdbRoutes implements \FrameWork\Routes
 
         $this -> jokesTable = new \FrameWork\DatabaseTable($pdo, 'joke', 'id', '\Ijdb\Entity\Joke', [ &$this -> authorsTable, &$this -> jokeCategoriesTable]);
         $this -> authorsTable = new \FrameWork\DatabaseTable($pdo, 'author', 'id', '\Ijdb\Entity\Author', [ &$this -> jokesTable]);
-        $this -> categoriesTable = new \FrameWork\DatabaseTable($pdo, 'category', 'id');
+        $this -> categoriesTable = new \FrameWork\DatabaseTable($pdo, 'category', 'id', '\Ijdb\Entity\Category', [&$this -> jokesTable, &$this -> jokeCategoriesTable]);
         $this -> jokeCategoriesTable = new \FrameWork\DatabaseTable($pdo, 'joke_category', 'categoryId');
         $this -> authentication = new \FrameWork\Authentication($this -> authorsTable, 'email', 'password');
     }

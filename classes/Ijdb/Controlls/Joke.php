@@ -30,12 +30,20 @@ class Joke
 
         $author = $this -> authentication -> getUser();
 
+        if (isset($_GET['category'])) {
+            $category = $this -> categoriesTable -> findById($_GET['category']);
+            $jokes = $category -> getJokes();
+        } else {
+            $jokes = $this -> jokesTable -> findAll();
+        }
+
         return ['template' => 'jokes.html.php',
                      'title' => $title,
                      'variables' => [
                         'totalJokes' => $totalJokes,
                         'jokes' => $jokes,
-                        'userId' => $author -> id ?? null
+                        'userId' => $author -> id ?? null,
+                        'categories' => $this -> categoriesTable -> findAll()
                      ]
                     ];
     }
@@ -70,6 +78,7 @@ class Joke
 
         $jokeEntity = $author->addJoke($joke);
 
+        $jokeEntity -> clearCategories();
 
         foreach ($_POST['category'] as $categoryId) {
             $jokeEntity -> addCategory($categoryId);

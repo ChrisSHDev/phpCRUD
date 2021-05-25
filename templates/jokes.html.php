@@ -1,3 +1,10 @@
+    <div class="jokelist">
+      <ul class="categories">
+        <?php foreach ($categories as $category): ?>
+        <li><a href="/joke/list?category=<?php echo $category -> id?>"><?php echo $category->name?></a></li>
+        <?php endforeach; ?>
+      </ul>
+    </div>
     <p>There are <?php echo $totalJokes ?> Jokes in total.</p>
 
     <?php foreach ($jokes as $joke): ?>
@@ -23,3 +30,11 @@
       </p>
     </blockquote>
     <?php endforeach; ?>
+
+    <div class="jokelist">
+      <ul class="categories">
+        <?php foreach ($categories as $category): ?>
+        <li><a href="/joke/list?category=<?php echo $category -> id?>"><?php echo $category->name?></a></li>
+        <?php endforeach; ?>
+      </ul>
+    </div>
