@@ -73,4 +73,42 @@ class Register
             ];
         }
     }
+
+    public function list()
+    {
+        $authors = $this -> authorsTable -> findAll();
+
+        return ['template' => 'authorlist.html.php',
+              'title' => 'User List',
+              'variables' => [
+                'authors' => $authors
+              ]];
+    }
+
+    public function permissions()
+    {
+        $author = $this -> authorsTable -> findById($_GET['id']);
+
+        $reflected = new \ReflectionClass('\Ijdb\Entity\Author');
+        $constants = $reflected -> getConstants();
+
+        return ['template' => 'permissions.html.php',
+      'title' => 'Edit Authority',
+      'variables' => [
+        'author' => $author,
+        'permissions' => $constants
+      ]
+      ];
+    }
+
+    public function savePermissions(){
+      $author = [
+        'id' => $_GET['id'],
+        'permissions' => array_sum($_POST['permissions'] ?? [])
+      ];
+
+      $This -> authorsTable -> save($author);
+
+      header('location: /author/list');
+    }
 }
