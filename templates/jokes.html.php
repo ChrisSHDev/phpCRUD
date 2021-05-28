@@ -19,13 +19,17 @@
         </a>
         Date: <?php echo $joke -> jokedate; ?>
         )
-        <?php if ($userId == $joke -> authorid) : ?>
+        <?php if ($user) : ?>
+        <?php if ($user->id == $joke->authorid || $user -> hasPermission(\Ijdb\Entity\Author::EDIT_JOKES)): ?>
         <a href="/joke/edit?id=<?php echo $joke -> id?>">Edit</a>
+        <?php endif; ?>
 
+        <?php if ($user -> id == $joke -> authorid || $user -> hasPermission(\Ijdb\Entity\author::DELETE_JOKES)): ?>
       <form action="/joke/delete" method="post">
         <input type="hidden" name="id" value="<?=$joke -> id?>">
         <input type="submit" value="Delete">
       </form>
+      <?php endif; ?>
       <?php endif; ?>
       </p>
     </blockquote>

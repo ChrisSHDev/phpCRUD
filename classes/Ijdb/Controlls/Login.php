@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Ijdb\Controlls;
 
@@ -6,7 +6,7 @@ class login
 {
     private $authentication;
 
-    public function __construct(\FrameWork\Authentication $authentication )
+    public function __construct(\FrameWork\Authentication $authentication)
     {
         $this -> authentication = $authentication;
     }
@@ -16,17 +16,21 @@ class login
         return ['template' => 'loginerror.html.php', 'title' => 'You are not logged in!'];
     }
 
-    public function loginForm(){
+    public function permissionerror()
+    {
+        return ['template' => 'loginerrorpermissions.html.php', 'title' => 'You do not have the authority.'];
+    }
+
+    public function loginForm()
+    {
         return['template' => 'login.html.php', 'title' => 'Log In'];
     }
 
     public function processLogin()
     {
-
-        if( $this-> authentication -> login($_POST['email'], $_POST['password'])){
+        if ($this-> authentication -> login($_POST['email'], $_POST['password'])) {
             header('location: /login/success');
-        }
-        else{
+        } else {
             return['template' => 'login.html.php',
             'title' => 'Log In',
             'variables' => [
@@ -36,11 +40,13 @@ class login
         }
     }
 
-    public function success(){
+    public function success()
+    {
         return['template' => 'loginsuccess.html.php', 'title' => 'Log In Success!'];
     }
 
-    public function logout(){
+    public function logout()
+    {
         \session_destroy();
         return ['template' => 'logout.html.php', 'title' => 'You are logged out now.'];
     }

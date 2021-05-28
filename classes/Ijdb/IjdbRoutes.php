@@ -45,6 +45,12 @@ class IjdbRoutes implements \FrameWork\Routes
                     'action' => 'error'
                 ]
                 ],
+              'login/permissionerror' => [
+                'GET' => [
+                  'controller' => $loginController,
+                  'action' => 'permissionerror'
+                ]
+                ],
             'login/success' => [
                 'GET' => [
                     'controller' => $loginController,
@@ -140,14 +146,16 @@ class IjdbRoutes implements \FrameWork\Routes
                     'controller' => $authorController,
                     'action' => 'savePermissions'
                   ],
-                  'login' => true
+                  'login' => true,
+                  'permissions' => \Ijdb\Entity\Author::EDIT_USER_ACCESS
                 ],
                 'author/list' => [
                   'GET' => [
                     'controller' => $authorController,
                     'action' => 'list'
                   ],
-                  'login' => true
+                  'login' => true,
+                  'permissions' => \Ijdb\Entity\Author::EDIT_USER_ACCESS
 
             ]
           ];

@@ -42,7 +42,7 @@ class Joke
                      'variables' => [
                         'totalJokes' => $totalJokes,
                         'jokes' => $jokes,
-                        'userId' => $author -> id ?? null,
+                        'user' => $author,
                         'categories' => $this -> categoriesTable -> findAll()
                      ]
                     ];
@@ -58,9 +58,10 @@ class Joke
     public function delete()
     {
         $author = $this -> authentication -> getUser();
+    
 
         $joke = $this -> jokesTable -> findById($_POST['id']);
-        if ($joke -> authorid != $author-> id) {
+        if ($joke -> authorid != $author-> id && !$author -> hasPermission(\Ijdb\Entity\Author::DELETE_JOKES)) {
             return;
         }
 
